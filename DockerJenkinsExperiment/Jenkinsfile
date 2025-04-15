@@ -1,4 +1,4 @@
-pipeline {
+/*pipeline {
 agent any
 stages {
 stage('Checkout Code') {
@@ -21,4 +21,29 @@ sh 'docker run -d -p 8081:80 my-docker-webapp'
 }
 }
 }
+}*/
+
+pipeline {
+    agent any
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/siddhi2709/myfirst.git'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                dir('DockerJenkinsExperiment') { // Ensure Docker build happens in the right folder
+                    powershell 'ls -l' // Debugging: List files to check if Dockerfile exists
+                    powershell 'docker build -t my-docker-webapp .' // Build Docker Image
+                }
+            }
+        }
+        stage('Run Docker Container') {
+            steps {
+                powershell 'docker run -d -p 8081:80 my-docker-webapp'
+            }
+        }
+    }
 }
+
