@@ -1,4 +1,4 @@
-pipeline {
+/*pipeline {
 agent any
 stages {
 stage('Checkout Code') {
@@ -21,9 +21,9 @@ sh 'docker run -d -p 8081:80 my-docker-webapp'
 }
 }
 }
-}
+} */
 
-/*pipeline {
+pipeline {
     agent any
     stages {
         stage('Checkout Code') {
@@ -45,5 +45,5 @@ sh 'docker run -d -p 8081:80 my-docker-webapp'
             }
         }
     }
-}*/
+}
 
