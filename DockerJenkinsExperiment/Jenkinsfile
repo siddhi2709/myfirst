@@ -1,29 +1,4 @@
 pipeline {
-agent any
-stages {
-stage('Checkout Code') {
-steps {
-git branch: 'main', url: 'https://github.com/siddhi2709/myfirst.git'
-}
-}
-stage('Build Docker Image') {
-steps {
-dir('DockerJenkinsExperiment') { // Ensure Docker build happens in the right folder
-sh 'ls -l' // Debugging: List files to check if Dockerfile exists
-sh 'docker build -t my-docker-webapp .' // Build Docker Image
-}
-}
-
-}
-stage('Run Docker Container') {
-steps {
-sh 'docker run -d -p 8081:80 my-docker-webapp'
-}
-}
-}
-} 
-
-/*pipeline {
     agent any
     stages {
         stage('Checkout Code') {
@@ -31,19 +6,21 @@ sh 'docker run -d -p 8081:80 my-docker-webapp'
                 git branch: 'main', url: 'https://github.com/siddhi2709/myfirst.git'
             }
         }
+
         stage('Build Docker Image') {
             steps {
-                dir('DockerJenkinsExperiment') { // Ensure Docker build happens in the right folder
-                    powershell 'ls' // List files in the current directory (correct PowerShell command)
-                    powershell 'docker build -t my-docker-webapp .' // Build Docker Image
+                dir('DockerJenkinsExperiment') {
+                    // Use Windows-compatible commands
+                    bat 'dir' // List files to check if Dockerfile exists
+                    bat 'docker build -t my-docker-webapp .' // Build Docker Image
                 }
             }
         }
+
         stage('Run Docker Container') {
             steps {
-                powershell 'docker run -d -p 8081:80 my-docker-webapp'
+                bat 'docker run -d -p 8081:80 my-docker-webapp'
             }
         }
     }
 }
-*/
